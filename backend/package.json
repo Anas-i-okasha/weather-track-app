@@ -2,11 +2,11 @@
 	"name": "backend",
 	"version": "0.0.1",
 	"description": "",
-	"author": "Anas okasha@@ okasha.i.anas@gmail",
+	"author": "Anas okasha @@ Email::okasha.i.anas@gmail",
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
-	  "build": "nest build",
+		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
@@ -21,10 +21,16 @@
 	},
 	"dependencies": {
 		"@nestjs/common": "11.0.1",
+		"@nestjs/config": "4.0.2",
 		"@nestjs/core": "11.0.1",
 		"@nestjs/platform-express": "11.0.1",
+		"@nestjs/typeorm": "11.0.0",
+		"dotenv": "17.2.3",
+		"ioredis": "5.8.2",
+		"pg": "8.16.3",
 		"reflect-metadata": "0.2.2",
-		"rxjs": "7.8.1"
+		"rxjs": "7.8.1",
+		"typeorm": "0.3.28"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "3.2.0",
