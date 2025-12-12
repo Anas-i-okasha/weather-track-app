@@ -34,3 +34,10 @@ export class CreateUserDto {
 	@MinLength(4)
 	confirm_password: string;
 }
+
+export class UserResponse {
+	id: number;
+	first_name: string;
+	last_name: string;
+	email: string;
+}

@@ -34,4 +34,13 @@ export class RedisService {
 	async exists(key: string) {
 		return await this.redis.exists(key);
 	}
+
+	async increment(key: string, ttl: number): Promise<number> {
+		const result = await this.redis
+			.multi()
+			.incr(key)
+			.expire(key, ttl, 'NX')
+			.exec();
+		return result[0][1];
+	}
 }
