@@ -1,9 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-import { BadRequestException, Controller, Get, Query } from '@nestjs/common';
+import {
+	BadRequestException,
+	Controller,
+	Get,
+	Query,
+	UseGuards,
+} from '@nestjs/common';
 import { WeatherService } from './weather.service';
 import { GetWeatherDto } from './dto/get-weather.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('weather')
+@UseGuards(AuthGuard('jwt'))
 export class WeatherController {
 	constructor(private readonly weatherService: WeatherService) {}
 

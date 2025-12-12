@@ -43,4 +43,39 @@ export class RedisService {
 			.exec();
 		return result[0][1];
 	}
+
+	async mget(keys: string[]) {
+		try {
+			keys = keys.filter(function (item, i, ar) {
+				return ar.indexOf(item) === i;
+			});
+		
+			if (keys.length === 0)
+				return [];
+	
+			const response = await this.redis.mget(keys);
+			return response;
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	async mset(keys: string[], values: string[]) {
+		try {
+			if (keys.length != values.length || keys.length === 0) 
+				throw new Error('mset: keys length (' +keys.length + ') and values length (' +values.length +') are not equal!');
+
+		const combinedArr = [];
+
+		for (let i = 0; i < keys.length; i++) {
+			const key = keys[i];
+			combinedArr.push(key);
+			combinedArr.push(values[i]);
+		}
+
+		return await this.redis.mset(combinedArr);
+		} catch(err) {
+			console.log('mset', err);
+		}
+	}
 }

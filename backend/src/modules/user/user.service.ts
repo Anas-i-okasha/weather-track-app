@@ -6,12 +6,16 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorKeys } from 'src/common/api-response';
 import { hashPassword } from 'src/common/utilities';
+import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class UserService {
+	private USER_INFO_DATA: 'user_info_v1';
+
 	constructor(
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
+		private readonly redisService: RedisService,
 	) {}
 
 	async create(
@@ -53,6 +57,10 @@ export class UserService {
 
 	findOne(id: number) {
 		return `This action returns a #${id} user`;
+	}
+
+	async findUserByEmail(email: string) {
+		return await this.usersRepository.findOneBy({ email });
 	}
 
 	private async checkEmailUnique(email: string): Promise<boolean> {
