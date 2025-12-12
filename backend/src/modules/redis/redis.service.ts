@@ -9,7 +9,12 @@ export class RedisService {
 	async set(key: string, value: any, ttl?: number) {
 		try {
 			if (ttl)
-				return await this.redis.set(key, JSON.stringify(value), 'EX', ttl);
+				return await this.redis.set(
+					key,
+					JSON.stringify(value),
+					'EX',
+					ttl,
+				);
 
 			return await this.redis.set(key, JSON.stringify(value));
 		} catch (err) {
