@@ -10,12 +10,9 @@ import { RedisService } from '../redis/redis.service';
 
 @Injectable()
 export class UserService {
-	private USER_INFO_DATA: 'user_info_v1';
-
 	constructor(
 		@InjectRepository(User)
 		private readonly usersRepository: Repository<User>,
-		private readonly redisService: RedisService,
 	) {}
 
 	async create(

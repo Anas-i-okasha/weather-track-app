@@ -1,10 +1,13 @@
 /* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@nestjs/common';
+import { HealthIndicator, HealthIndicatorResult } from '@nestjs/terminus';
 import Redis from 'ioredis';
 
 @Injectable()
-export class RedisService {
-	constructor(@Inject('REDIS_CLIENT') private readonly redis: Redis) {}
+export class RedisService extends HealthIndicator {
+	constructor(@Inject('REDIS_CLIENT') private readonly redis: Redis) {
+		super();
+	}
 
 	async set(key: string, value: any, ttl?: number) {
 		try {
@@ -35,7 +38,7 @@ export class RedisService {
 		return await this.redis.exists(key);
 	}
 
-	async increment(key: string, ttl: number): Promise<number> {
+	async increment(key: string, ttl: number) {
 		const result = await this.redis
 			.multi()
 			.incr(key)
@@ -44,38 +47,12 @@ export class RedisService {
 		return result[0][1];
 	}
 
-	async mget(keys: string[]) {
+	async pingCheck(key: string): Promise<HealthIndicatorResult> {
 		try {
-			keys = keys.filter(function (item, i, ar) {
-				return ar.indexOf(item) === i;
-			});
-		
-			if (keys.length === 0)
-				return [];
-	
-			const response = await this.redis.mget(keys);
-			return response;
-		} catch (err) {
-			console.log(err);
-		}
-	}
-
-	async mset(keys: string[], values: string[]) {
-		try {
-			if (keys.length != values.length || keys.length === 0) 
-				throw new Error('mset: keys length (' +keys.length + ') and values length (' +values.length +') are not equal!');
-
-		const combinedArr = [];
-
-		for (let i = 0; i < keys.length; i++) {
-			const key = keys[i];
-			combinedArr.push(key);
-			combinedArr.push(values[i]);
-		}
-
-		return await this.redis.mset(combinedArr);
-		} catch(err) {
-			console.log('mset', err);
+			await this.redis.ping();
+			return this.getStatus(key, true);
+		} catch {
+			return this.getStatus(key, false);
 		}
 	}
 }

@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import Redis from 'ioredis';
+import { RedisService } from './redis.service';
 
 @Module({
 	providers: [
+		RedisService,
 		{
 			provide: 'REDIS_CLIENT',
 			useFactory: () => {
@@ -17,6 +19,6 @@ import Redis from 'ioredis';
 			},
 		},
 	],
-	exports: ['REDIS_CLIENT'],
+	exports: [RedisService],
 })
 export class RedisModule {}

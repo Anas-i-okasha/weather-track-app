@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
 	Injectable,
 	NestMiddleware,
@@ -21,7 +22,7 @@ export class RateLimitMiddleware implements NestMiddleware {
 		// increment and get current count
 		const current = await this.redisService.increment(key, ttl);
 
-		if (current > limit) {
+		if (typeof current == 'number' && current > limit) {
 			throw new HttpException(
 				{
 					message: 'Too Many Requests',

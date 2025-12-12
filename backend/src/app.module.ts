@@ -5,12 +5,16 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/data-source';
 import { RedisModule } from './modules/redis/redis.module';
-import { RedisService } from './modules/redis/redis.service';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { HealthCheckModule } from './modules/health-check/health-check.module';
+import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { WeatherModule } from './modules/weather/weather.module';
 
 @Module({
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 	imports: [
+		RedisModule,
 		ConfigModule.forRoot({ isGlobal: true }),
 		ThrottlerModule.forRoot({
 			throttlers: [
@@ -22,9 +26,12 @@ import { ThrottlerModule } from '@nestjs/throttler';
 		}),
 		// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		TypeOrmModule.forRoot(typeOrmConfig),
-		RedisModule,
+		UserModule,
+		AuthModule,
+		WeatherModule,
+		HealthCheckModule,
 	],
 	controllers: [AppController],
-	providers: [AppService, RedisService],
+	providers: [AppService],
 })
 export class AppModule {}
