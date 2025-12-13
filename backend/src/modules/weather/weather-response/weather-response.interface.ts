@@ -4,5 +4,5 @@ export interface WeatherResponse {
 	humidity: number;
 	description: string;
 	location: string;
-	timestamp: string; // ISO
+	timestamp: number;
 }

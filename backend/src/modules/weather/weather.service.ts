@@ -1,27 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { Openweather } from './providers/openweather';
-import { Openmeteo } from './providers/openmeteo';
 import { v4 as uuidv4 } from 'uuid';
-
+import { Tomorrow } from './providers/tomorrow';
 export interface NormalizedWeatherResponse {
 	provider: string;
-	weather: {
-		temperature: number; // Celsius
-		humidity?: number;
-		description?: string;
-	};
+	temperature: number; // Celsius
+	humidity?: number;
+	description?: string;
 	location: string;
-	timestamp: string; // ISO
+	timestamp: string;
 }
 
 @Injectable()
 export class WeatherService {
 	constructor(
 		private openWeather: Openweather,
-		private openMeteo: Openmeteo,
+		private tomorrow: Tomorrow,
 	) {}
 
-	private readonly providers = () => [this.openWeather, this.openMeteo];
+	private readonly providers = () => [this.openWeather, this.tomorrow];
 
 	private async tryProviders(
 		fn: (p: any) => Promise<NormalizedWeatherResponse>,
@@ -32,12 +29,7 @@ export class WeatherService {
 		for (const provider of providers) {
 			try {
 				const result = await fn(provider);
-				if (
-					result &&
-					result.weather &&
-					typeof result.weather.temperature === 'number'
-				)
-					return result;
+				if (result && result.temperature) return result;
 
 				// await this.logger.log(
 				// 	provider.name,

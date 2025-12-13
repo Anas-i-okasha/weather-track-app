@@ -6,6 +6,7 @@ import {
 	HttpStatus,
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
+import * as moment from 'moment';
 import { RATE_LIMIT, RATE_TTL_SECONDS } from 'src/common/constant';
 import { RedisService } from 'src/modules/redis/redis.service';
 
@@ -18,16 +19,17 @@ export class RateLimitMiddleware implements NestMiddleware {
 
 		const key = `rate_limit_${ip}`;
 		const limit = +RATE_LIMIT; // max requests
-		const ttl = +RATE_TTL_SECONDS; // window 60 seconds
+		const ttl = +RATE_TTL_SECONDS; // bLOCKED for 30 minutes
 
 		// increment and get current count
 		const current = await this.redisService.increment(key, ttl);
 
 		if (typeof current == 'number' && current > limit) {
+			const remainingSeconds = await this.redisService.ttl(key);
 			throw new HttpException(
 				{
 					message: 'Too Many Requests',
-					retryAfter: ttl,
+					retryAfter: `${moment.duration(remainingSeconds, 'seconds').asMinutes()} Minutes`,
 				},
 				HttpStatus.TOO_MANY_REQUESTS,
 			);

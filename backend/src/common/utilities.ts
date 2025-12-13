@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export function nowTime() {
 	return moment().utc().unix();
@@ -19,4 +19,16 @@ export async function comparePasswords(
 
 export function generateSessionId(): string {
 	return `${Date.now()}-${Math.random().toString(36).substring(2, 15)}-${Math.random().toString(36).substring(2, 15)}`;
+}
+
+export function getWeatherDescription(weatherCode: number): string {
+	const map: Record<number, string> = {
+		1000: 'Clear',
+		1100: 'Mostly Clear',
+		1101: 'Partly Cloudy',
+		1102: 'Cloudy',
+		2000: 'Fog',
+		2100: 'Light Fog',
+	};
+	return map[weatherCode] || 'Unknown';
 }

@@ -47,6 +47,10 @@ export class RedisService extends HealthIndicator {
 		return result[0][1];
 	}
 
+	async ttl(key: string): Promise<number> {
+		return await this.redis.ttl(key);
+	}
+
 	async pingCheck(key: string): Promise<HealthIndicatorResult> {
 		try {
 			await this.redis.ping();

@@ -5,13 +5,16 @@ import {
 	Get,
 	Query,
 	UseGuards,
+	UseInterceptors,
 } from '@nestjs/common';
 import { WeatherService } from './weather.service';
 import { GetWeatherDto } from './dto/get-weather.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { WeatherLoggingInterceptor } from 'src/common/middleware/weather-logging/weather-logging.interceptor';
 
 @Controller('weather')
 @UseGuards(AuthGuard('jwt'))
+@UseInterceptors(WeatherLoggingInterceptor)
 export class WeatherController {
 	constructor(private readonly weatherService: WeatherService) {}
 

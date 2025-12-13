@@ -2,26 +2,33 @@ import {
 	Column,
 	CreateDateColumn,
 	DeleteDateColumn,
+	Entity,
+	Index,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
 
-export class WeatherProviderLog {
+@Entity('weather_request_logs')
+export class WeatherRequestLog {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
-	provider_name: string;
+	@Index('weather_request_city_idx')
+	@Column({ nullable: true })
+	city: string;
 
-	@Column('text')
-	error_message: string;
+	@Column({ type: 'numeric', nullable: true })
+	latitude: number;
 
-	@CreateDateColumn({ type: 'timestamp without time zone' })
+	@Column({ type: 'numeric', nullable: true })
+	longitude: number;
+
+	@CreateDateColumn()
 	created_at: Date;
 
-	@UpdateDateColumn({ type: 'timestamp without time zone' })
+	@UpdateDateColumn()
 	updated_at: Date;
 
-	@DeleteDateColumn({ type: 'timestamp without time zone' })
+	@DeleteDateColumn()
 	deleted_at: Date;
 }
