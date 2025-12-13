@@ -9,12 +9,13 @@ import { Tomorrow } from './providers/tomorrow';
 import { WeatherLoggingInterceptor } from 'src/common/middleware/weather-logging/weather-logging.interceptor';
 import { WeatherRequestLog } from './entities/weather-provider-log.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { WeatherProviderErrorLog } from './entities/weather-provider-error-log.entity';
 
 @Module({
 	imports: [
 		HttpModule,
 		RedisModule,
-		TypeOrmModule.forFeature([WeatherRequestLog]),
+		TypeOrmModule.forFeature([WeatherRequestLog, WeatherProviderErrorLog]),
 	],
 	controllers: [WeatherController],
 	providers: [

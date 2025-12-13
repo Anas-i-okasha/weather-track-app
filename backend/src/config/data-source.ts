@@ -14,7 +14,7 @@ const dataSourceOptions: DataSourceOptions = {
 	password: process.env.DB_PASSWORD,
 	entities: [__dirname + '/../**/*.entity.{js,ts}'],
 	migrations: ['dist/database/migrations/**/*.js'],
-	synchronize: false,
+	synchronize: false, // DO NOT CHANGE IT TO TRUE IN DEV MODE
 	logging: false,
 };
 

@@ -5,7 +5,7 @@ import {
 	NestInterceptor,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { WeatherRequestLog } from 'src/modules/weather/entities/weather-provider-log.entity';
 import { Repository } from 'typeorm';
 
@@ -16,20 +16,23 @@ export class WeatherLoggingInterceptor implements NestInterceptor {
 		private weatherLogRepo: Repository<WeatherRequestLog>,
 	) {}
 
-	async intercept(
-		context: ExecutionContext,
-		next: CallHandler,
-	): Promise<Observable<CallHandler>> {
+	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
 		const request = context.switchToHttp().getRequest();
 		const { city, latitude, longitude } = request.query;
 
-		const weatherLog = await this.weatherLogRepo.save({
-			city: city,
-			latitude: latitude,
-			longitude: longitude,
-		});
-
-		request.weatherLogId = weatherLog.id;
-		return next.handle();
+		return next.handle().pipe(
+			tap((response) => {
+				void this.weatherLogRepo.save({
+					provider_name: response.provider,
+					city,
+					latitude,
+					longitude,
+					provider_response: response,
+				});
+			}),
+			catchError((err) => {
+				return throwError(() => err);
+			}),
+		);
 	}
 }

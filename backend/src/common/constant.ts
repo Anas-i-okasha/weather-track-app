@@ -1,5 +1,3 @@
-// Removed session constants - using JWT only now
-
 export const JWT_SECRET_TOKEN = process.env.JWT_SECRET_TOKEN;
 export const JWT_SECRET_TOKEN_TTL = 3600;
 

@@ -7,11 +7,16 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
+import { WeatherResponse } from '../weather-response/weather-response.interface';
 
 @Entity('weather_request_logs')
 export class WeatherRequestLog {
 	@PrimaryGeneratedColumn()
 	id: number;
+
+	@Index('weather_request_provider_idx')
+	@Column({ type: 'character varying', length: 100, nullable: false })
+	provider_name: string;
 
 	@Index('weather_request_city_idx')
 	@Column({ nullable: true })
@@ -22,6 +27,9 @@ export class WeatherRequestLog {
 
 	@Column({ type: 'numeric', nullable: true })
 	longitude: number;
+
+	@Column({ type: 'json', nullable: true })
+	provider_response: WeatherResponse;
 
 	@CreateDateColumn()
 	created_at: Date;
