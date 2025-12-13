@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/only-throw-error */
 import { Injectable } from '@nestjs/common';
 import { Openweather } from './providers/openweather';
-import { v4 as uuidv4 } from 'uuid';
 import { Tomorrow } from './providers/tomorrow';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WeatherProviderErrorLog } from './entities/weather-provider-error-log.entity';
 import { Repository } from 'typeorm';
+import { genRandomString } from '../../common/utilities';
 
 export interface NormalizedWeatherResponse {
 	provider: string;
@@ -31,7 +31,7 @@ export class WeatherService {
 		fn: (p: any) => Promise<NormalizedWeatherResponse>,
 		params: { city?: string; lat?: number; lon?: number },
 	) {
-		const errorId = uuidv4();
+		const errorId = genRandomString(10);
 		const providers = this.providers();
 
 		for (const provider of providers) {

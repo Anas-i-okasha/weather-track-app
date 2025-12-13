@@ -4,9 +4,8 @@ import { CreateUserDto, UserResponse } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ErrorKeys } from 'src/common/api-response';
-import { hashPassword } from 'src/common/utilities';
-import { RedisService } from '../redis/redis.service';
+import { ErrorKeys } from '../../common/api-response';
+import { hashPassword } from '../../common/utilities';
 
 @Injectable()
 export class UserService {

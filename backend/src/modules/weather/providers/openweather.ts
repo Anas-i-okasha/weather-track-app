@@ -3,7 +3,7 @@ import { WeatherProvider } from '../weather-provider/weather-provider.interface'
 import { WeatherResponse } from '../weather-response/weather-response.interface';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom, map, timeout } from 'rxjs';
-import { nowTime } from 'src/common/utilities';
+import { nowTime } from '../../../common/utilities';
 
 @Injectable()
 export class Openweather implements WeatherProvider {

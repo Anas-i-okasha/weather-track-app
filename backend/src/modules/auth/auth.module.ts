@@ -6,7 +6,7 @@ import { LocalStrategy } from './jwt-strategy/local.strategy';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JWT_SECRET_TOKEN, JWT_SECRET_TOKEN_TTL } from 'src/common/constant';
+import { JWT_SECRET_TOKEN, JWT_SECRET_TOKEN_TTL } from '../../common/constant';
 
 @Module({
 	imports: [

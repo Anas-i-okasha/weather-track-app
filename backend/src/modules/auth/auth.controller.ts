@@ -10,7 +10,7 @@ export class AuthController {
 	@UseGuards(AuthGuard('local'))
 	@Post('login')
 	login(@Req() req: ExpressRequest) {
-		req.session.user = req.user;
+		req.session.user = req.user; // save the user info in the session for subsequent request
 		return this.authService.login(req.user);
 	}
 }

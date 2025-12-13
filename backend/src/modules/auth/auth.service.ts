@@ -7,9 +7,9 @@ import {
 	JWT_REFRESH_SECRET_TOKEN_TTL,
 	JWT_SECRET_TOKEN,
 	JWT_SECRET_TOKEN_TTL,
-} from 'src/common/constant';
+} from '../../common/constant';
 import { UserService } from '../user/user.service';
-import { comparePasswords } from 'src/common/utilities';
+import { comparePasswords } from '../../common/utilities';
 
 @Injectable()
 export class AuthService {

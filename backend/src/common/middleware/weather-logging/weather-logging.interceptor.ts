@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { WeatherRequestLog } from 'src/modules/weather/entities/weather-provider-log.entity';
+import { WeatherRequestLog } from '../../../modules/weather/entities/weather-provider-log.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

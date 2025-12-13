@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import * as moment from 'moment';
-import { RATE_LIMIT, RATE_TTL_SECONDS } from 'src/common/constant';
-import { RedisService } from 'src/modules/redis/redis.service';
+import { RATE_LIMIT, RATE_TTL_SECONDS } from '../../../common/constant';
+import { RedisService } from '../../../modules/redis/redis.service';
 
 @Injectable()
 export class RateLimitMiddleware implements NestMiddleware {

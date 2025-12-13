@@ -59,4 +59,8 @@ export class RedisService extends HealthIndicator {
 			return this.getStatus(key, false);
 		}
 	}
+
+	async flushall() {
+		return this.redis.flushall();
+	}
 }

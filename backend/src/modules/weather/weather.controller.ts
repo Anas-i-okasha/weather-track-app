@@ -10,11 +10,11 @@ import {
 import { WeatherService } from './weather.service';
 import { GetWeatherDto } from './dto/get-weather.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { WeatherLoggingInterceptor } from 'src/common/middleware/weather-logging/weather-logging.interceptor';
+import { WeatherLoggingInterceptor } from '../../common/middleware/weather-logging/weather-logging.interceptor';
 
 @Controller('weather')
 @UseGuards(AuthGuard('jwt'))
-@UseInterceptors(WeatherLoggingInterceptor)
+@UseInterceptors(WeatherLoggingInterceptor) // Interceptor to log request and weather provider response
 export class WeatherController {
 	constructor(private readonly weatherService: WeatherService) {}
 
