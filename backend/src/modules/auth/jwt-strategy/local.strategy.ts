@@ -7,7 +7,7 @@ import { Strategy } from 'passport-local';
 export class LocalStrategy extends PassportStrategy(Strategy) {
 	constructor(private readonly authService: AuthService) {
 		super({
-			usernameField: 'email', // use email instead of username
+			usernameField: 'email',
 		});
 	}
 
@@ -16,6 +16,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
 		if (!user) throw new UnauthorizedException('Invalid credentials');
 
-		return user; // 👈 becomes req.user
+		return user;
 	}
 }
