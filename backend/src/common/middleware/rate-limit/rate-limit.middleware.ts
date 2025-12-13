@@ -6,6 +6,7 @@ import {
 	HttpStatus,
 } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
+import { RATE_LIMIT, RATE_TTL_SECONDS } from 'src/common/constant';
 import { RedisService } from 'src/modules/redis/redis.service';
 
 @Injectable()
@@ -15,9 +16,9 @@ export class RateLimitMiddleware implements NestMiddleware {
 	async use(req: Request, res: Response, next: NextFunction) {
 		const ip = req.ip;
 
-		const key = `rate_limit:${ip}`;
-		const limit = 10; // max requests
-		const ttl = 60; // window 60 seconds
+		const key = `rate_limit_${ip}`;
+		const limit = +RATE_LIMIT; // max requests
+		const ttl = +RATE_TTL_SECONDS; // window 60 seconds
 
 		// increment and get current count
 		const current = await this.redisService.increment(key, ttl);
