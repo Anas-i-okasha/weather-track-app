@@ -4,20 +4,20 @@ The **Weather Track App** is a backend API that provides weather information bas
 
 Weather data is retrieved using multiple providers to ensure reliability:
 
-* **OpenWeather**
-* **Tomorrow.io**
+- **OpenWeather**
+- **Tomorrow.io**
 
 ---
 
 ## 📚 Table of Contents
 
-* [Project Structure](#project-structure)
-* [Installation](#installation)
-* [Usage](#usage)
-* [API Endpoints](#api-endpoints)
-* [Environment Variables](#environment-variables)
-* [Security](#security)
-* [Testing](#testing)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Environment Variables](#environment-variables)
+- [Security](#security)
+- [Testing](#testing)
 
 ---
 
@@ -142,7 +142,9 @@ npm run start:dev
 
 Create a `.env` file in the `backend` directory and populate it with the required environment variables.
 
-> ⚠️ **Note:** The secret values are shared separately via email.
+⚠️ Important: Sensitive values (secrets and credentials) are shared separately via email.
+If you don’t have access to them, please contact me via email at <okasha.i.anas@gmail> or through LinkedIn: https://www.linkedin.com/in/anas-okasha/
+.
 
 ---
 
@@ -177,15 +179,15 @@ API documentation with request/response examples is available via Postman:
 
 The API uses **JSON Web Tokens (JWT)** for securing endpoints:
 
-* Users authenticate via the login endpoint
-* A JWT is returned upon successful authentication
-* Protected routes require a valid JWT in the `Authorization` header
-* Tokens are verified server-side to ensure authenticated access
+- Users authenticate via the login endpoint
+- A JWT is returned upon successful authentication
+- Protected routes require a valid JWT in the `Authorization` header
+- Tokens are verified server-side to ensure authenticated access
 
 Additional security features include:
 
-* **Rate limiting** using Redis
-* **Request & provider error logging** for observability
+- **Rate limiting** using Redis
+- **Request & provider error logging** for observability
 
 ---
 
