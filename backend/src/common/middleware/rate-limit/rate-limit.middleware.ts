@@ -29,7 +29,7 @@ export class RateLimitMiddleware implements NestMiddleware {
 			throw new HttpException(
 				{
 					message: 'Too Many Requests',
-					retryAfter: `${moment.duration(remainingSeconds, 'seconds').asMinutes()} Minutes`,
+					retryAfter: `${moment.duration(remainingSeconds, 'seconds').asMinutes()?.toFixed(2)} Minutes`,
 				},
 				HttpStatus.TOO_MANY_REQUESTS,
 			);
